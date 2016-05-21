@@ -1,0 +1,23 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+
+pkgbase=('saws')
+pkgname=('saws')
+_module='saws'
+pkgver='0.4.0'
+pkgrel=1
+
+pkgdesc='A supercharged AWS command line interface (CLI)'
+url='https://github.com/donnemartin/saws'
+license=('APACHE')
+arch=('any')
+
+depends=('python' 'python-prompt_toolkit')
+makedepends=('python-setuptools')
+
+source=("https://pypi.python.org/packages/61/74/ccbb7fe76c11c246a335ce5aca558d2bb46e622739e5041482fb745d80d6/saws-${pkgver}.tar.gz")
+md5sums=('e1d6411b798a88b2ae27d65a87e23194')
+
+package() {
+	cd "${srcdir}/${_module}-${pkgver}"
+	python setup.py install --root="${pkgdir}" --optimize=1
+}
