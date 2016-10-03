@@ -1,0 +1,36 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+
+_pkgname=aerc
+pkgname=$_pkgname-git
+pkgver=r117.ff58c22
+pkgrel=1
+
+pkgdesc="Asynchronous Email Reading Client"
+url="https://github.com/SirCmpwn/aerc"
+license=('MIT')
+arch=('any')
+
+depends=()
+makedepends=('git' 'cmocka' 'termbox-git')
+
+provides=("$_pkgname")
+conflicts=("$_pkgname")
+source=("git://github.com/SirCmpwn/$_pkgname")
+md5sums=("SKIP")
+
+pkgver() {
+	cd "${srcdir}/${_pkgname}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "${srcdir}/${_pkgname}"
+
+	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr .
+	make
+}
+
+package() {
+	cd "${srcdir}/${_pkgname}"
+	make DESTDIR="${pkgdir}/" install
+}
