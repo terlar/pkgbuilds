@@ -1,45 +1,35 @@
 # Maintainer: Terje Larsen <terlar@gmail.com>
 
 _name=x-on-resize
-pkgname=$_name-git
+pkgname=x-on-resize-git
 pkgver=0.2.3.g617e5ed
 pkgrel=1
 
-pkgdesc="A simple display configuration daemon"
-url="http://keithp.com/blogs/x-on-resize"
-license=('GPL2')
+pkgdesc='A simple display configuration daemon'
 arch=('i686' 'x86_64')
+url='http://keithp.com/blogs/x-on-resize'
+license=('GPL2')
 
-depends=()
-makedepends=('git')
+depends=('xorg-xrandr')
+makedepends=('git' 'xorg-util-macros')
 
-provides=("$_name")
-conflicts=("$_name")
-source=("git://people.freedesktop.org/~keithp/$_name")
-md5sums=("SKIP")
+conflicts=("${_name}")
+provides=("${_name}")
+source=("git+git://people.freedesktop.org/~keithp/${_name}")
+sha1sums=('SKIP')
 
 pkgver() {
-	cd "${srcdir}/${_name}"
-	git describe --tags | sed -e 's:v::' -e 's/-/./g'
+  cd "${srcdir}/${_name}"
+  git describe | sed -e 's/v//' -e 's/-/./g'
 }
 
 build() {
-	cd "${srcdir}/${_name}"
-
-	msg "Run autogen.sh"
-	./autogen.sh
-
-	msg "Run configure"
-	./configure --prefix=/usr
-
-	msg "Run make"
-	make
+  cd "${srcdir}/${_name}"
+  ./autogen.sh --prefix /usr
+  make
 }
 
 package() {
-	msg "Make install"
-	cd "${srcdir}/${_name}"
-
-	msg "pkgdir: ${pkgdir}"
-	make DESTDIR="${pkgdir}/" install
+  cd "${srcdir}/${_name}"
+  make install DESTDIR="${pkgdir}"
 }

@@ -1,17 +1,17 @@
 # Maintainer: Terje Larsen <terlar@gmail.com>
 
 _name=go-jira
-pkgname="${_name}-git"
+pkgname=go-jira-git
 pkgver=0.1.0.12.g42e787e
 pkgrel=1
 
-pkgdesc="Simple jira command line client in Go"
-url="http://github.com/Netflix-Skunkworks/${_name}"
+pkgdesc='Simple jira command line client in Go'
+url='http://github.com/Netflix-Skunkworks/go-jira'
 license=('APACHE')
 arch=('i686' 'x86_64')
 
 depends=()
-makedepends=('git')
+makedepends=('go' 'git')
 
 provides=("${_name}")
 conflicts=("${_name}")
@@ -19,21 +19,16 @@ source=("git+https://github.com/Netflix-Skunkworks/${_name}.git")
 md5sums=("SKIP")
 
 pkgver() {
-	cd "${srcdir}/${_name}"
-	git describe --tags | sed -e 's:v::' -e 's/-/./g'
+  cd "${srcdir}/${_name}"
+  git describe | sed -e 's/v//' -e 's/-/./g'
 }
 
 build() {
-	cd "${srcdir}/${_name}"
-
-	msg "Run make"
-	make
+  cd "${srcdir}/${_name}"
+  make
 }
 
 package() {
-	msg "Make install"
-	cd "${srcdir}/${_name}"
-
-	msg "pkgdir: ${pkgdir}"
-	make GOBIN="${pkgdir}/usr/bin" build
+  cd "${srcdir}/${_name}"
+  make build GOBIN="${pkgdir}/usr/bin"
 }

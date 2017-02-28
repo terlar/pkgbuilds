@@ -1,9 +1,9 @@
 # Maintainer: Terje Larsen <terlar@gmail.com>
 
-pkgbase=('eclipselink-java')
-pkgname=('eclipselink-java')
+_name=eclipselink
+pkgname=eclipselink-java
+pkgver=2.6.3
 _file='eclipselink-2.6.3.v20160428-59c81c5.zip'
-pkgver='2.6.3'
 pkgrel=1
 
 pkgdesc='Comprehensive open-source Java persistence solution addressing relational, XML, and database web services.'
@@ -11,24 +11,21 @@ url='https://www.eclipse.org/eclipselink'
 license=('EPL')
 arch=('any')
 
-depends=()
-makedepends=()
+depends=('java-environment')
+makedepends=('unzip')
 
 source=("http://www.eclipse.org/downloads/download.php?r=1&file=/rt/eclipselink/releases/${pkgver}/${_file}")
 sha1sums=('0a7f0cda31b8bca1d4557b989cad517e9d040897')
+
 package() {
-	_module="${pkgname/-java}"
-	_dest="${pkgdir}/usr/share/java/${_module}"
+  _dest="${pkgdir}/usr/share/java/${_name}"
 
-	cd "${srcdir}"
-	unzip -o "${_file}"
-	cd "${_module}/jlib"
+  cd "${srcdir}"
+  unzip -o "${_file}"
+  cd "${_name}/jlib"
 
-	find * -type f -not -name '*.zip' | while read _file; do
-		if [[ ${_file} =~ (.*\.jar$) ]]; then
-			install -D -m755 "${_file}" "${_dest}/${_file}"
-		else
-			install -D -m644 "${_file}" "${_dest}/${_file}"
-		fi
-	done
+  find * -type f -not -name '*.zip' | while read _file
+  do
+    install -D -m644 "${_file}" "${_dest}/${_file}"
+  done
 }
