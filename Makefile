@@ -29,6 +29,10 @@ build: ## Build PKGBUILDS and add to REPO
 build: $(QUEUE)
 	aurbuild -c -d $(REPO) -a $(QUEUE)
 
+.PHONY: update
+update:
+	git pull
+
 .PHONY: clean
 clean: ## Remove build artifacts
 ifneq ("$(wildcard $(QUEUE))","")
