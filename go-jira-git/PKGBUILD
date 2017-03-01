@@ -2,7 +2,7 @@
 
 _name=go-jira
 pkgname=go-jira-git
-pkgver=0.1.0.12.g42e787e
+pkgver=0.1.11
 pkgrel=1
 
 pkgdesc='Simple jira command line client in Go'
@@ -16,11 +16,11 @@ makedepends=('go' 'git')
 provides=("${_name}")
 conflicts=("${_name}")
 source=("git+https://github.com/Netflix-Skunkworks/${_name}.git")
-md5sums=("SKIP")
+md5sums=('SKIP')
 
 pkgver() {
   cd "${srcdir}/${_name}"
-  git describe | sed -e 's/v//' -e 's/-/./g'
+  git describe --tags | sed -e 's/v//' -e 's/-/./g'
 }
 
 build() {
