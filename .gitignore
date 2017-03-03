@@ -2,24 +2,27 @@ tmp/
 pkgs/
 
 # Package ignores
-*/*.tar
-*/*.tar.*
-*/*.zip
-*/*.tgz
+*/*.gz
 */*.log
 */*.log.*
 */*.sig
+*/*.tar
+*/*.tar.*
+*/*.tgz
+*/*.xz
+*/*.zip
 
 ## makepkg working folders
+*/patches
 */pkg
 */src
 
 ## Source files
 */*.deb
 */*.gem
+*/*.html
 */*.out
 */*.rpm
-*/*.html
 
 ## Pacakge source folders
 */*/*
