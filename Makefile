@@ -56,6 +56,9 @@ build: $(QUEUE) $(CHROOT)
 	  LANG=C repose -r $(DESTDIR)$(REPODIR) -fv $(REPO); \
 	done
 
+	sudo pacman -Sy
+	sudo pacman -Fy
+
 .PHONY: update
 update: ## Pull latest git commit
 	git pull
