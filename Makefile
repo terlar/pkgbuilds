@@ -53,9 +53,8 @@ build: $(QUEUE) $(CHROOT)
 	  cd $(CURDIR)/$$pkg; \
 	  sudo PKGDEST=$(DESTDIR)$(REPODIR) makechrootpkg \
 	    -d $(DESTDIR)$(REPODIR) -r $(CURDIR)/$(CHROOT) -cnu; \
+	  LANG=C repose -r $(DESTDIR)$(REPODIR) -fv $(REPO) \
 	done
-
-	LANG=C repose -r $(DESTDIR)$(REPODIR) -fv $(REPO)
 
 .PHONY: update
 update: ## Pull latest git commit
