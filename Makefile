@@ -1,10 +1,16 @@
 .DEFAULT_GOAL := help
 
-REPO ?= custom
+REPO    ?= custom
+DESTDIR ?= $(CURDIR)/
+REPODIR ?= pkgs/$(REPO)
+MACHINE := $(shell uname -m)
 
-comma:= ,
-empty:=
-space:= $(empty) $(empty)
+MAKEPKG_CONF := /usr/share/devtools/makepkg-$(MACHINE).conf
+PACMAN_CONF  := tmp/pacman.conf
+
+comma := ,
+empty :=
+space := $(empty) $(empty)
 
 ifdef PKGS
 PKGFILTER := $(addsuffix /%,$(subst $(comma),$(space),$(PKGS)))
@@ -12,9 +18,20 @@ PKGBUILDS := $(sort $(filter $(PKGFILTER),$(wildcard */PKGBUILD)))
 else
 PKGBUILDS := $(sort $(wildcard */PKGBUILD))
 endif
-QUEUE     := tmp/queue
-BUILDDIR  := tmp/build
-TARGETS   := $(addprefix $(BUILDDIR)/,$(PKGBUILDS))
+
+CHROOT   := tmp/chroot
+QUEUE    := tmp/queue
+BUILDDIR := tmp/build
+TARGETS  := $(addprefix $(BUILDDIR)/,$(PKGBUILDS))
+
+$(PACMAN_CONF):
+	pacconf --raw > $@
+
+$(CHROOT): $(PACMAN_CONF)
+	mkdir -p $@
+	sudo mkarchroot \
+	  -C $(PACMAN_CONF) -M $(MAKEPKG_CONF) \
+	  $(CHROOT)/root base-devel
 
 $(BUILDDIR)/%/PKGBUILD: %/PKGBUILD
 	@mkdir -p $(BUILDDIR)
@@ -25,12 +42,23 @@ $(QUEUE): $(TARGETS)
 	printf '%s\n' $(+D) > $@
 
 .PHONY: build
-build: ## Build PKGBUILDS and add to REPO
-build: $(QUEUE)
-	aurbuild -c -d $(REPO) -a $(QUEUE)
+build: ## Build PKGBUILDS
+build: $(QUEUE) $(CHROOT)
+	sudo arch-nspawn \
+          -C $(PACMAN_CONF) -M $(MAKEPKG_CONF) \
+          $(CHROOT)/root pacman -Syyu --noconfirm
+
+	mkdir -p $(DESTDIR)$(REPODIR)
+	for pkg	in $$(cat $(QUEUE)); do \
+	  cd $(CURDIR)/$$pkg; \
+	  sudo PKGDEST=$(DESTDIR)$(REPODIR) makechrootpkg \
+	    -d $(DESTDIR)$(REPODIR) -r $(CURDIR)/$(CHROOT) -cnu; \
+	done
+
+	LANG=C repose -r $(DESTDIR)$(REPODIR) -fv $(REPO)
 
 .PHONY: update
-update:
+update: ## Pull latest git commit
 	git pull
 
 .PHONY: clean
@@ -40,6 +68,9 @@ ifneq ("$(wildcard $(QUEUE))","")
 endif
 ifneq ("$(wildcard $(BUILDDIR))","")
 	rm -rf $(BUILDDIR)
+endif
+ifneq ("$(wildcard $(CURDIR)/$(REPODIR))","")
+	rm -rf $(CURDIR)/$(REPODIR)
 endif
 
 .PHONY: help
