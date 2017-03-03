@@ -1,2 +1,25 @@
-pkgs/
 tmp/
+pkgs/
+
+# Package ignores
+*/*.tar
+*/*.tar.*
+*/*.zip
+*/*.tgz
+*/*.log
+*/*.log.*
+*/*.sig
+
+## makepkg working folders
+*/pkg
+*/src
+
+## Source files
+*/*.deb
+*/*.gem
+*/*.out
+*/*.rpm
+*/*.html
+
+## Pacakge source folders
+*/*/*
