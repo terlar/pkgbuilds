@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := help
 
 REPO    ?= custom
-DESTDIR ?= $(CURDIR)/
-REPODIR ?= pkgs/$(REPO)
+DESTDIR ?=
+REPODIR ?= $(CURDIR)/pkgs/$(REPO)
 MACHINE := $(shell uname -m)
 
 MAKEPKG_CONF := /usr/share/devtools/makepkg-$(MACHINE).conf
@@ -69,8 +69,8 @@ endif
 ifneq ("$(wildcard $(BUILDDIR))","")
 	rm -rf $(BUILDDIR)
 endif
-ifneq ("$(wildcard $(CURDIR)/$(REPODIR))","")
-	rm -rf $(CURDIR)/$(REPODIR)
+ifneq ("$(wildcard $(CURDIR)/pkgs/$(REPO))","")
+	rm -rf pkgs/$(REPO)
 endif
 
 .PHONY: help
