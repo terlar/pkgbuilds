@@ -14,7 +14,7 @@ space := $(empty) $(empty)
 
 ifdef PKGS
 PKGFILTER := $(addsuffix /%,$(subst $(comma),$(space),$(PKGS)))
-PKGBUILDS := $(sort $(filter $(PKGFILTER),$(wildcard */PKGBUILD)))
+PKGBUILDS := $(filter $(PKGFILTER),$(wildcard */PKGBUILD))
 else
 PKGBUILDS := $(sort $(wildcard */PKGBUILD))
 endif
