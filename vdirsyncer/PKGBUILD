@@ -10,20 +10,24 @@ url="https://vdirsyncer.readthedocs.org/"
 license=('MIT')
 replaces=('python2-vdirsyncer')
 provides=('python2-vdirsyncer')
-depends=('python-click' 'python-setuptools'
-         'python-requests-toolbelt' 'python-atomicwrites'
-         'python-click-threading' 'python-click-log')
+depends=('python')
 makedepends=('python-setuptools-scm')
 optdepends=('python-requests-oauthlib: Remotestorage support')
 checkdepends=('python-pytest' 'python-wsgi-intercept'
               'radicale' 'python-werkzeug' 'python-pytest-xprocess'
               'python-pytest-localserver' 'python-hypothesis'
-              'python-pytest-subtesthack')
+              'python-pytest-subtesthack'
+              'python-click' 'python-click-log' 'python-click-threading'
+              'python-atomicwrites'
+              'python-requests-toolbelt')
 source=("https://pypi.io/packages/source/v/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
 md5sums=('764735185bee538e8d740079f388596b')
 
 check() {
   cd "$srcdir/${_pkgname}-$pkgver"
+
+  export LC_ALL=en_US.utf-8
+  export LANG=en_US.utf-8
   make test
 }
 
