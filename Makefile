@@ -2,7 +2,7 @@
 
 REPO    ?= custom
 DESTDIR ?=
-REPODIR ?= $(CURDIR)/pkgs/$(REPO)
+REPODIR ?= $(CURDIR)/pkgs
 MACHINE := $(shell uname -m)
 
 MAKEPKG_CONF := /usr/share/devtools/makepkg-$(MACHINE).conf
@@ -48,12 +48,13 @@ build: $(QUEUE) $(CHROOT)
           -C $(PACMAN_CONF) -M $(MAKEPKG_CONF) \
           $(CHROOT)/root pacman -Syyu --noconfirm
 
-	mkdir -p $(DESTDIR)$(REPODIR)
+	mkdir -p $(DESTDIR)$(REPODIR)/$(REPO)
+
 	for pkg	in $$(cat $(QUEUE)); do \
 	  cd $(CURDIR)/$$pkg; \
-	  sudo PKGDEST=$(DESTDIR)$(REPODIR) makechrootpkg \
-	    -d $(DESTDIR)$(REPODIR) -r $(CURDIR)/$(CHROOT) -cnu; \
-	  LANG=C repose -r $(DESTDIR)$(REPODIR) -fv $(REPO); \
+	  sudo PKGDEST=$(DESTDIR)$(REPODIR)/$(REPO) makechrootpkg \
+	    -d $(DESTDIR)$(REPODIR)/$(REPO) -r $(CURDIR)/$(CHROOT) -cnu; \
+	  LANG=C repose -r $(DESTDIR)$(REPODIR)/$(REPO) -fv $(REPO); \
 	done
 
 	sudo pacman -Sy
