@@ -5,7 +5,7 @@ BASEDIR := $(dir $(abspath $(CURDIR)))
 TMPDIR  := $(BASEDIR)tmp
 MACHINE := $(shell uname -m)
 
-BUILDQUEUE := $(BASEDIR)/buildqueue
+BUILDQUEUE := $(BASEDIR)buildqueue
 
 DESTDIR ?=
 REPODIR ?= $(BASEDIR)pkgs
@@ -44,7 +44,7 @@ $(BUILDDIR)/%/PKGBUILD: %/PKGBUILD
 	  sudo PKGDEST=$(DESTDIR)$(REPODIR)/$(REPO) makechrootpkg \
 	    -d $(DESTDIR)$(REPODIR)/$(REPO) -r $(CHROOT) -cnu
 
-	LANG=C repose -r $(DESTDIR)$(REPODIR)/$(REPO) -fv $(REPO)
+	LANG=C repose -r $(DESTDIR)$(REPODIR)/$(REPO) -zfv $(REPO)
 
 .PHONY: repo
 repo: $(CHROOT)

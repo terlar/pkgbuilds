@@ -25,8 +25,8 @@ trap_exit() {
 
 main() {
 	local pkgs=()
-
 	local pkgname
+
 	for pkg in */PKGBUILD
 	do
 		pkgname="${pkg%/*}"
@@ -36,7 +36,12 @@ main() {
 
 	tmp="$(mktemp -t 'buildqueue.XXXXXXXX')" || exit
 	trap 'trap_exit' EXIT
-	find -- "$@" -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
+	if [[ $# -eq 0 ]]
+	then
+		find -- * -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
+	else
+		find -- "$@" -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
+	fi
 	tsort <(deps "${tmp}") \
 		| grep -Fxf <(printf '%s\n' "${pkgs[@]}") \
 		| tac
