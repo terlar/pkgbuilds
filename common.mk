@@ -79,3 +79,6 @@ endif
 ifneq ("$(wildcard $(BASEDIR)/pkgs/$(REPO))","")
 	rm -rf pkgs/$(REPO)
 endif
+ifneq ("$(wildcard $(TMPDIR)/pacman.conf)","")
+	rm -rf $(TMPDIR)/pacman.conf
+endif
