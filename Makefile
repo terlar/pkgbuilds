@@ -2,8 +2,9 @@
 
 REPOS := $(notdir $(subst /Makefile,,$(wildcard */Makefile)))
 
-test:
-	echo $(REPOS)
+comma := ,
+empty :=
+space := $(empty) $(empty)
 
 .PHONY: build
 build: ## Build repo PKGBUILDS
@@ -12,7 +13,7 @@ build: ## Build repo PKGBUILDS
 clean: ## Remove build artifacts
 
 build clean:
-	@for i in $(REPOS); do \
+	@for i in $(subst $(comma),$(space),$(REPOS)); do \
 		echo "--- Invoking source/$$i/Makefile ..."; \
 		$(MAKE) --no-print-directory -C "$$i" $@; \
 	done
