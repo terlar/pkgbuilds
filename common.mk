@@ -11,7 +11,8 @@ DESTDIR ?=
 REPODIR ?= $(BASEDIR)pkgs
 
 MAKEPKG_CONF := /usr/share/devtools/makepkg-$(MACHINE).conf
-PACMAN_CONF  := $(TMPDIR)/pacman.conf
+PACCONF      := $(TMPDIR)/pacman.conf
+REPO_PACCONF := $(TMPDIR)/$(REPO).conf
 
 comma := ,
 empty :=
@@ -27,13 +28,19 @@ CHROOT   := $(TMPDIR)/chroot
 BUILDDIR := $(TMPDIR)/build/$(REPO)
 TARGETS  := $(addprefix $(BUILDDIR)/,$(PKGBUILDS))
 
-$(PACMAN_CONF):
+$(PACCONF):
 	pacconf --raw > $@
 
-$(CHROOT): $(PACMAN_CONF)
+$(REPO_PACCONF):
+	echo "[options]" > $@
+	pacconf --options --raw >> $@
+	echo "[$(REPO)]" >> $@
+	pacconf --repo=$(REPO) --raw >> $@
+
+$(CHROOT): $(PACCONF)
 	mkdir -p $@
 	sudo mkarchroot \
-	  -C $(PACMAN_CONF) -M $(MAKEPKG_CONF) \
+	  -C $(PACCONF) -M $(MAKEPKG_CONF) \
 	  $(CHROOT)/root base-devel
 
 $(BUILDDIR)/%/PKGBUILD: %/PKGBUILD
@@ -49,14 +56,14 @@ $(BUILDDIR)/%/PKGBUILD: %/PKGBUILD
 .PHONY: repo
 repo: $(CHROOT)
 	sudo arch-nspawn \
-          -C $(PACMAN_CONF) -M $(MAKEPKG_CONF) \
+          -C $(PACCONF) -M $(MAKEPKG_CONF) \
           $(CHROOT)/root pacman -Syyu --noconfirm
 	mkdir -p $(DESTDIR)$(REPODIR)/$(REPO)
 
 .PHONY:	refresh
-refresh:
-	sudo pacman -Sy
-	sudo pacman -Fy
+refresh: $(REPO_PACCONF)
+	sudo pacman -Fy --config=$(REPO_PACCONF)
+	sudo pacman -Sy --config=$(REPO_PACCONF)
 
 .PHONY: build
 build: repo $(TARGETS) refresh
