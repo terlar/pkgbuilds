@@ -5,6 +5,8 @@ BASEDIR := $(dir $(abspath $(CURDIR)))
 TMPDIR  := $(BASEDIR)tmp
 MACHINE := $(shell uname -m)
 
+BUILDQUEUE := $(BASEDIR)/buildqueue
+
 DESTDIR ?=
 REPODIR ?= $(BASEDIR)pkgs
 
@@ -16,18 +18,14 @@ empty :=
 space := $(empty) $(empty)
 
 ifdef PKGS
-PKGFILTER := $(addsuffix /%,$(subst $(comma),$(space),$(PKGS)))
-PKGBUILDS := $(filter $(PKGFILTER),$(wildcard */PKGBUILD))
+PKGBUILDS := $(addsuffix /PKGBUILD,$(shell $(BUILDQUEUE) $(subst $(comma),$(space),$(PKGS))))
 else
-PKGBUILDS := $(sort $(wildcard */PKGBUILD))
+PKGBUILDS := $(addsuffix /PKGBUILD,$(shell $(BUILDQUEUE)))
 endif
 
 CHROOT   := $(TMPDIR)/chroot
 BUILDDIR := $(TMPDIR)/build/$(REPO)
 TARGETS  := $(addprefix $(BUILDDIR)/,$(PKGBUILDS))
-
-test:
-	echo $(addprefix build-,$(subst /PKGBUILD,,$(PKGBUILDS)))
 
 $(PACMAN_CONF):
 	pacconf --raw > $@
@@ -62,9 +60,6 @@ refresh:
 
 .PHONY: build
 build: repo $(TARGETS) refresh
-
-.PHONY:
-build-%: %/PKGBUILD
 
 .PHONY: clean
 clean: ## Remove build artifacts

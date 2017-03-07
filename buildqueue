@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -eu
+set -o pipefail
+
+deps() {
+	awk -v FS='[<=>]' '
+	/pkgbase/ {
+		read = 1; pb = $2
+
+		printf("%s\t%s\n", pb, pb)
+	} {
+		if (read && $0 ~ /^\t(make|check)?depends/) {
+		printf("%s\t%s\n", pb, $2)
+		}
+
+		if ($0 ~ /^$/) {
+		read = 0    # split package
+		}
+	}' "$@"
+}
+
+trap_exit() {
+	rm -rf "${tmp}"
+}
+
+main() {
+	local pkgs=()
+
+	local pkgname
+	for pkg in */PKGBUILD
+	do
+		pkgname="${pkg%/*}"
+		pkgname="${pkgname##*/}"
+		pkgs+=("${pkgname}")
+	done
+
+	tmp="$(mktemp -t 'buildqueue.XXXXXXXX')" || exit
+	trap 'trap_exit' EXIT
+	find -- "$@" -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
+	tsort <(deps "${tmp}") \
+		| grep -Fxf <(printf '%s\n' "${pkgs[@]}") \
+		| tac
+
+}
+
+main "$@"
