@@ -61,6 +61,7 @@ build() {
     --disable-samplerate \
     --disable-rpath \
     --disable-default-build-tests \
+    --disable-webrtc-aec \
     DATADIRNAME=share
 
   # fight unused direct deps
