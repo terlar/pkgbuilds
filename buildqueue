@@ -19,11 +19,23 @@ deps() {
 	}' "$@"
 }
 
+print_error() {
+	local msg="$1"
+	local command="${0##*/}"
+	>&2 echo "${command}: ${msg}"
+}
+
 trap_exit() {
 	rm -rf "${tmp}"
 }
 
 main() {
+	if [[ $# -eq 0 ]]
+	then
+		print_error "no packages provided"
+		return 1
+	fi
+
 	local pkgs=()
 	local pkgname
 
@@ -36,16 +48,11 @@ main() {
 
 	tmp="$(mktemp -t 'buildqueue.XXXXXXXX')" || exit
 	trap 'trap_exit' EXIT
-	if [[ $# -eq 0 ]]
-	then
-		find -- * -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
-	else
-		find -- "$@" -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
-	fi
+
+	find -- "$@" -maxdepth 1 -type f -name .SRCINFO -print0 | xargs -0 cat > "${tmp}"
 	tsort <(deps "${tmp}") \
 		| grep -Fxf <(printf '%s\n' "${pkgs[@]}") \
 		| tac
-
 }
 
 main "$@"

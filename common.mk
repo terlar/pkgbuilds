@@ -18,10 +18,13 @@ comma := ,
 empty :=
 space := $(empty) $(empty)
 
+ALL_PKGS  := $(subst /PKGBUILD,,$(wildcard */PKGBUILD))
+SKIP_PKGS := $(subst $(comma),$(space),$(SKIP))
+
 ifdef PKGS
 PKGBUILDS := $(addsuffix /PKGBUILD,$(shell $(BUILDQUEUE) $(subst $(comma),$(space),$(PKGS))))
 else
-PKGBUILDS := $(addsuffix /PKGBUILD,$(shell $(BUILDQUEUE)))
+PKGBUILDS := $(addsuffix /PKGBUILD,$(shell $(BUILDQUEUE) $(filter-out $(SKIP_PKGS),$(ALL_PKGS))))
 endif
 
 CHROOT   := $(TMPDIR)/chroot
