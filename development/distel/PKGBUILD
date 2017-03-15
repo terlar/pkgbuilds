@@ -7,6 +7,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/massemanet/distel"
 license=('BSD')
 depends=('erlang' 'emacs')
+makedepends=('git')
 source=(${pkgname%-git}::git+https://github.com/massemanet/distel)
 md5sums=('SKIP')
 

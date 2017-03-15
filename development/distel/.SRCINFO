@@ -6,6 +6,7 @@ pkgbase = distel
 	arch = i686
 	arch = x86_64
 	license = BSD
+	makedepends = git
 	depends = erlang
 	depends = emacs
 	source = distel::git+https://github.com/massemanet/distel
