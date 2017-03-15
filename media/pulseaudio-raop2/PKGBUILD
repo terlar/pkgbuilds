@@ -16,7 +16,8 @@ pkgrel=1
 arch=('i686' 'x86_64')
 url="http://hfujita.github.io/pulseaudio-raop2/"
 license=(LGPL)
-makedepends=(libasyncns libcap attr libxtst libsm libsndfile libtool rtkit libsoxr
+makedepends=(git
+             libasyncns libcap attr libxtst libsm libsndfile libtool rtkit libsoxr
              speexdsp tdb systemd dbus avahi bluez bluez-libs gconf intltool jack2-dbus sbc
              lirc openssl xenstore fftw orc json-c gtk3 webrtc-audio-processing
              check)
