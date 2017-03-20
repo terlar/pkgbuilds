@@ -23,7 +23,7 @@ build clean:
 	done
 
 .PHONY: add-gpg-keys
-add-gpg-keys:
+add-gpg-keys: ## Add required GPG keys
 	gpg --recv-key $(GPG_KEYS)
 
 .PHONY: update
