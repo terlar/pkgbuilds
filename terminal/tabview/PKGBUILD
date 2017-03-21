@@ -1,0 +1,21 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+
+pkgname=tabview
+pkgver=1.4.2
+pkgrel=1
+
+pkgdesc='A curses command-line CSV and list (tabular data) viewer'
+url='https://github.com/firecat53/tabview'
+license=('MIT')
+arch=('any')
+
+depends=('python')
+makedepends=('python-setuptools')
+
+source=("https://pypi.python.org/packages/f5/6c/75a807e740dcddbade3194cfaf05db72e378a714d2c16341b60d7044fe0f/tabview-1.4.2.tar.gz")
+md5sums=('bcc8bc045051f4529d3cad43b56b61d2')
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  python setup.py install --root="${pkgdir}" --optimize=1
+}
