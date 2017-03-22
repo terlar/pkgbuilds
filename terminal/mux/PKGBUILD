@@ -1,6 +1,6 @@
 # Maintainer: Terje Larsen <terje@horse>
 pkgname=mux
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="tmux session wrapper"
 arch=('any')
@@ -8,7 +8,7 @@ url="https://github.com/terlar/mux"
 license=('GPL')
 depends=(bash tmux)
 source=(https://github.com/terlar/$pkgname/archive/v${pkgver}.tar.gz)
-sha256sums=('66ca3253d0d049cd28404b38e092e37144e5eb1f135174cfac83e18cca3fc4d5')
+sha256sums=('80e107dcd3281b4d747d564ea1f94a76d00643dd486a4d180587506d6f415e76')
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
