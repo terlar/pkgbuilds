@@ -1,0 +1,19 @@
+# Maintainer: Terje Larsen <terje@horse>
+pkgname=mux
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="tmux session wrapper"
+arch=('any')
+url="https://github.com/terlar/mux"
+license=('GPL')
+depends=(bash tmux)
+source=(https://github.com/terlar/$pkgname/archive/v${pkgver}.tar.gz)
+sha256sums=('66ca3253d0d049cd28404b38e092e37144e5eb1f135174cfac83e18cca3fc4d5')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
