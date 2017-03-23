@@ -11,11 +11,11 @@ url='http://lostpackets.de/khal/'
 license=('MIT')
 makedepends=('python-setuptools-scm' 'python-sphinxcontrib-newsfeed' 'python-configobj')
 depends=('python-urwid' "python-tzlocal>=1.0"
-         "python-click>=3.2" "python-icalendar>=3.9.2" 'python-xdg')
+         "python-click>=3.2" "python-icalendar>=3.9.2" 'python-xdg'
+         'python-atomicwrites')
 optdepends=('python-setproctitle' 'vdirsyncer')
 checkdepends=('python-pytest' 'python-freezegun'
               'python-click-log' 'python-click-threading'
-              'python-atomicwrites'
               'vdirsyncer')
 source=("https://lostpackets.de/khal/downloads/khal-${pkgver}.tar.gz")
 sha256sums=('97eb94f345dd7a93f2b983d43e74b3cf86bf679f35e942f17d8823400e2bd0e7')
