@@ -71,6 +71,18 @@ refresh: $(REPO_PACCONF)
 .PHONY: build
 build: repo $(TARGETS) refresh
 
+.PHONY: new-pkg
+new-pkg:
+ifndef PKG
+	$(error PKG required)
+endif
+ifneq ("$(LOCAL)","1")
+	cower -d $(PKG)
+else
+	mkdir $(PKG)
+	touch $(PKG)/PKGBUILD
+endif
+
 .PHONY: clean
 clean: ## Remove build artifacts
 ifneq ("$(wildcard $(QUEUE))","")

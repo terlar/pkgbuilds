@@ -22,6 +22,14 @@ build clean:
 		$(MAKE) --no-print-directory -C "$$i" $@; \
 	done
 
+.PHONY: new-pkg
+new-pkg:
+ifndef REPO
+	$(error REPO required)
+endif
+	$(info --- Invoking source/$(REPO)/Makefile ...)
+	$(MAKE) --no-print-directory -C $(REPO) $@
+
 .PHONY: add-gpg-keys
 add-gpg-keys: ## Add required GPG keys
 	gpg --recv-key $(GPG_KEYS)
