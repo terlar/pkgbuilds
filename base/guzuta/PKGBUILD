@@ -1,0 +1,22 @@
+# Maintainer: Terje Larsen <terje@horse>
+pkgname=guzuta
+pkgver=0.2.3
+pkgrel=1
+pkgdesc="Custom repository manager for ArchLinux pacman"
+arch=('any')
+url="https://github.com/eagletmt/guzuta"
+license=('MIT')
+makedepends=('rust' 'cargo')
+checkdepends=()
+source=(https://github.com/eagletmt/$pkgname/archive/v$pkgver.tar.gz)
+sha256sums=('7b80e3d46b4abd59e5c2182e27850406397ed712cc5c86158673ffddf71f9640')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  cargo build --release
+
+  install -Dm755 "target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
+}
+
+# vim:set ts=2 sw=2 et:
