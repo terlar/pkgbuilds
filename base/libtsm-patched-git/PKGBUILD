@@ -1,0 +1,54 @@
+# Maintainer: Terje Larsen <terlar@github>
+pkgname=libtsm-patched-git
+_gitname=libtsm
+pkgver=3.r17.gb73acb4
+pkgrel=1
+pkgdesc="Terminal-emulator State Machine. With various patches."
+arch=('i686' 'x86_64')
+url="http://www.freedesktop.org/wiki/Software/kmscon/$_gitname"
+license=('MIT')
+depends=(glibc)
+makedepends=('git' 'libxkbcommon')
+provides=('libtsm-patched' 'libtsm')
+conflicts=('libtsm' 'libtsm-patched')
+options=(!libtool)
+source=('git://people.freedesktop.org/~dvdhrm/libtsm'
+        'addon-underline.patch'
+        'addon-taiji-bright.patch'
+        'addon-true-color.patch')
+sha256sums=('SKIP'
+            '7103869ea6d8b7151d1b6b0fa0852b66da10e3a59454e4d761cb9e6ddfef6958'
+            'b222ba8895faced6dd47cac31d7416baec52b172a44c31aa1c75b47a9a743725'
+            '25f43bc1021cca1bbdab505938e6ca8f64675dc3014c24e0210a90f2524e1858')
+
+pkgver() {
+  cd "$_gitname"
+  git describe --long | sed -r "s/^$_gitname-//;s/([^-]*-g)/r\\1/;s/-/./g"
+}
+
+prepare() {
+  cd "$srcdir/$_gitname"
+
+  msg2 'Apply patch addon-underline.patch'
+  patch -p1 -i ../addon-underline.patch
+  msg2 'Apply patch addon-taiji-bright.patch'
+  patch -p1 -i ../addon-taiji-bright.patch
+  msg2 'Apply patch addon-true-color.patch'
+  patch -p1 -i ../addon-true-color.patch
+
+  test -f ./configure || NOCONFIGURE=1 ./autogen.sh
+  ./configure --prefix=/usr
+}
+
+build() {
+  cd "$srcdir/$_gitname"
+  make
+}
+
+package() {
+  cd "$srcdir/$_gitname"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$_gitname/COPYING"
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:

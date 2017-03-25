@@ -1,0 +1,42 @@
+diff --git a/src/tsm/tsm-vte.c b/src/tsm/tsm-vte.c
+index ec8a936..8d6069c 100644
+--- a/src/tsm/tsm-vte.c
++++ b/src/tsm/tsm-vte.c
+@@ -293,6 +293,28 @@ static uint8_t color_palette_solarized_white[COLOR_NUM][3] = {
+ 	[COLOR_BACKGROUND]    = { 238, 232, 213 }, /* light grey */
+ };
+ 
++static uint8_t color_palette_taiji_bright[COLOR_NUM][3] = {
++	[COLOR_BLACK]         = {  38,  50,  56 }, /* black */
++	[COLOR_RED]           = { 244,  67,  54 }, /* red */
++	[COLOR_GREEN]         = {  76, 175,  80 }, /* green */
++	[COLOR_YELLOW]        = { 255, 152,   0 }, /* yellow */
++	[COLOR_BLUE]          = {  33, 150, 243 }, /* blue */
++	[COLOR_MAGENTA]       = { 171,  71, 188 }, /* magenta */
++	[COLOR_CYAN]          = {  38, 166, 154 }, /* cyan */
++	[COLOR_LIGHT_GREY]    = { 176, 190, 197 }, /* light grey */
++	[COLOR_DARK_GREY]     = {  96, 125, 139 }, /* dark grey */
++	[COLOR_LIGHT_RED]     = { 239,  83,  80 }, /* light red */
++	[COLOR_LIGHT_GREEN]   = {   0, 200,  83 }, /* light green */
++	[COLOR_LIGHT_YELLOW]  = { 188, 170, 164 }, /* light yellow */
++	[COLOR_LIGHT_BLUE]    = {  66, 165, 245 }, /* light blue */
++	[COLOR_LIGHT_MAGENTA] = { 186, 104, 200 }, /* light magenta */
++	[COLOR_LIGHT_CYAN]    = {  77, 182, 172 }, /* light cyan */
++	[COLOR_WHITE]         = { 238, 238, 238 }, /* white */
++
++	[COLOR_FOREGROUND]    = {  38,  50,  56 }, /* black */
++	[COLOR_BACKGROUND]    = { 238, 238, 238 }, /* white */
++};
++
+ static uint8_t (*get_palette(struct tsm_vte *vte))[3]
+ {
+ 	if (!vte->palette_name)
+@@ -304,6 +326,8 @@ static uint8_t (*get_palette(struct tsm_vte *vte))[3]
+ 		return color_palette_solarized_black;
+ 	if (!strcmp(vte->palette_name, "solarized-white"))
+ 		return color_palette_solarized_white;
++	if (!strcmp(vte->palette_name, "taiji-bright"))
++		return color_palette_taiji_bright;
+ 
+ 	return color_palette;
+ }
