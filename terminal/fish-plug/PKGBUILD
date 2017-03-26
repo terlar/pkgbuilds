@@ -1,0 +1,19 @@
+# Maintainer: Terje Larsen <terlar@github>
+pkgname=fish-plug
+pkgver=0.1.1
+pkgrel=1
+pkgdesc="A simple plugin manager for fish"
+arch=('any')
+url="https://github.com/terlar/fish-plug"
+license=('MIT')
+depends=(fish)
+source=(https://github.com/terlar/$pkgname/archive/v${pkgver}.tar.gz)
+sha256sums=('edbede90c15c89a5e0d598f389bf3451fc8f56a3d5a0b0862ed3d3c3f5aac0a3')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
