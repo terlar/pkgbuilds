@@ -1,0 +1,33 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+
+_name=gmail-oauth2-tools
+pkgname=gmail-oauth2-tools-git
+pkgver=0.0.1
+pkgrel=1
+
+pkgdesc='Tools and sample code for authenticating to Gmail with OAuth2'
+arch=('any')
+url='https://github.com/google/gmail-oauth2-tools'
+license=('APACHE2')
+
+depends=('python')
+makedepends=('git')
+
+conflicts=("${_name}")
+provides=("${_name}")
+source=("git+git://github.com/google/${_name}"
+        'fix-python-shebang.patch')
+sha256sums=('SKIP'
+            'd712020d7166078e8df44380fba84400f0578859678180c935d2eafeb2ba4d65')
+
+prepare() {
+  cd "$srcdir/${_name}"
+
+  msg2 'Apply patch fix-python-shebang.patch'
+  patch -p1 -i ../fix-python-shebang.patch
+}
+
+package() {
+  cd "${srcdir}/${_name}"
+  install -Dm755 python/oauth2.py  ${pkgdir}/usr/bin/oauth2.py
+}

@@ -1,0 +1,18 @@
+pkgbase = gmail-oauth2-tools-git
+	pkgdesc = Tools and sample code for authenticating to Gmail with OAuth2
+	pkgver = 0.0.1
+	pkgrel = 1
+	url = https://github.com/google/gmail-oauth2-tools
+	arch = any
+	license = APACHE2
+	makedepends = git
+	depends = python
+	provides = gmail-oauth2-tools
+	conflicts = gmail-oauth2-tools
+	source = git+git://github.com/google/gmail-oauth2-tools
+	source = fix-python-shebang.patch
+	sha256sums = SKIP
+	sha256sums = d712020d7166078e8df44380fba84400f0578859678180c935d2eafeb2ba4d65
+
+pkgname = gmail-oauth2-tools-git
+

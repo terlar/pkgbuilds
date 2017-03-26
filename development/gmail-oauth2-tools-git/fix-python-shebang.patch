@@ -1,0 +1,10 @@
+diff --git a/python/oauth2.py b/python/oauth2.py
+index 246bc85..26ec219 100755
+--- a/python/oauth2.py
++++ b/python/oauth2.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python2
+ #
+ # Copyright 2012 Google Inc.
+ #
