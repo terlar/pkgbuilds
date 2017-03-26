@@ -32,6 +32,7 @@ BUILDDIR := $(TMPDIR)/build/$(REPO)
 TARGETS  := $(addprefix $(BUILDDIR)/,$(PKGBUILDS))
 
 $(PACCONF):
+	@mkdir -p $(@D)
 	pacconf --raw > $@
 
 $(REPO_PACCONF):
