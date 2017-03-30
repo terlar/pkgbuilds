@@ -1,0 +1,17 @@
+pkgbase = guzuta-git
+	pkgdesc = Custom repository manager for ArchLinux pacman
+	pkgver = v0.2.4.r4.g76260bd
+	pkgrel = 1
+	url = https://github.com/eagletmt/guzuta
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = rust
+	makedepends = cargo
+	provides = guzuta=v0.2.4.r4.g76260bd
+	conflicts = guzuta
+	source = git+git://github.com/eagletmt/guzuta
+	sha256sums = SKIP
+
+pkgname = guzuta-git
+
