@@ -1,5 +1,8 @@
 .DEFAULT_GOAL := help
 
+MACHINE := $(shell uname -m)
+CHROOT  := /var/cache/pkgs/chroot-$(MACHINE)
+
 REPOS := $(notdir $(subst /Makefile,,$(wildcard */Makefile)))
 
 GPG_KEYS := \
@@ -12,8 +15,22 @@ comma := ,
 empty :=
 space := $(empty) $(empty)
 
+.PHONY: repo
+repo:
+	sudo arch-nspawn \
+	  $(CHROOT)/root pacman -Syyu --noconfirm
+
+.PHONY: add-gpg-keys
+add-gpg-keys: ## Add required GPG keys
+	gpg --recv-key $(GPG_KEYS)
+
+.PHONY: update
+update: ## Pull latest git commit
+	git pull
+
 .PHONY: build
 build: ## Build repo PKGBUILDS
+build: repo
 
 .PHONY: clean
 clean: ## Remove build artifacts
@@ -25,20 +42,17 @@ build clean:
 	done
 
 .PHONY: new-pkg
-new-pkg:
+new-pkg: ## Initialize a new package
+
+.PHONY: update-pkg
+update-pkg: ## Update an existing package
+
+new-pkg update-pkg:
 ifndef REPO
 	$(error REPO required)
 endif
 	$(info --- Invoking source/$(REPO)/Makefile ...)
-	$(MAKE) --no-print-directory -C $(REPO) $@
-
-.PHONY: add-gpg-keys
-add-gpg-keys: ## Add required GPG keys
-	gpg --recv-key $(GPG_KEYS)
-
-.PHONY: update
-update: ## Pull latest git commit
-	git pull
+	@$(MAKE) --no-print-directory -C $(REPO) $@
 
 .PHONY: help
 help: ## Describe tasks

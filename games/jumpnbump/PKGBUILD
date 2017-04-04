@@ -10,6 +10,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/MCMic/jumpnbump"
 license=('GPL')
 depends=('sdl2' 'sdl2_mixer' 'sdl2_net')
+makedepends=('git')
 optdepends=('jumpnbump-levels: more levels for jumpnbump' 'jumpnbump-menu: a launcher for jumpnbump')
 source=(jumpnbump::git+https://github.com/MCMic/jumpnbump#commit=0785e55 safe-temporary-files.patch)
 sha256sums=('SKIP'

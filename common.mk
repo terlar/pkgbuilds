@@ -1,18 +1,13 @@
 .DEFAULT_GOAL := build
 
-REPO    := $(notdir $(CURDIR))
 BASEDIR := $(dir $(abspath $(CURDIR)))
-TMPDIR  := $(BASEDIR)tmp
 MACHINE := $(shell uname -m)
-
+CHROOT  := /var/cache/pkgs/chroot-$(MACHINE)
 BUILDQUEUE := $(BASEDIR)buildqueue
 
-DESTDIR ?=
-REPODIR ?= $(BASEDIR)pkgs
+DESTDIR ?= $(BASEDIR)pkgs
 
-MAKEPKG_CONF := /usr/share/devtools/makepkg-$(MACHINE).conf
-PACCONF      := $(TMPDIR)/pacman.conf
-REPO_PACCONF := $(TMPDIR)/$(REPO).conf
+REPO := $(notdir $(CURDIR))
 
 comma := ,
 empty :=
@@ -27,50 +22,43 @@ else
 PKGBUILDS := $(addsuffix /PKGBUILD,$(shell $(BUILDQUEUE) $(filter-out $(SKIP_PKGS),$(ALL_PKGS))))
 endif
 
-CHROOT   := $(TMPDIR)/chroot
-BUILDDIR := $(TMPDIR)/build/$(REPO)
-TARGETS  := $(addprefix $(BUILDDIR)/,$(PKGBUILDS))
+BUILDDIR     := .build
+SOURCESDIR   := $(BUILDDIR)/sources
+LOGSDIR      := $(BUILDDIR)/logs
+PKGBUILDSDIR := $(BUILDDIR)/PKGBUILDs
+TARGETS      := $(addprefix $(PKGBUILDSDIR)/,$(PKGBUILDS))
 
-$(PACCONF):
-	@mkdir -p $(@D)
-	pacconf --raw > $@
+$(PKGBUILDSDIR)/%/PKGBUILD: %/PKGBUILD
+	@mkdir -p $(PKGBUILDSDIR)
+	cp -R $(+D) $(PKGBUILDSDIR)
 
-$(REPO_PACCONF):
-	echo "[options]" > $@
-	pacconf --options --raw >> $@
-	echo "[$(REPO)]" >> $@
-	pacconf --repo=$(REPO) --raw >> $@
+	@mkdir -p $(DESTDIR)/$(REPO)/os/$(MACHINE)
+	@mkdir -p $(SOURCESDIR) $(LOGSDIR)
 
-$(CHROOT): $(PACCONF)
-	mkdir -p $@
-	sudo mkarchroot \
-	  -C $(PACCONF) -M $(MAKEPKG_CONF) \
-	  $(CHROOT)/root base-devel
+ifdef INIT
+	guzuta build $(@D) \
+	  --repo-name $(REPO) \
+	  --arch $(MACHINE) \
+	  --chroot-dir $(CHROOT) \
+	  --repo-dir $(DESTDIR)/$(REPO)/os/$(MACHINE) \
+	  --srcdest $(SOURCESDIR) --logdest $(LOGSDIR)
 
-$(BUILDDIR)/%/PKGBUILD: %/PKGBUILD
-	@mkdir -p $(BUILDDIR)
-	cp -R $(+D) $(BUILDDIR)
-
-	cd $(@D) && \
-	  sudo PKGDEST=$(DESTDIR)$(REPODIR)/$(REPO) makechrootpkg \
-	    -d $(DESTDIR)$(REPODIR)/$(REPO) -r $(CHROOT) -cnu
-
-	LANG=C repose -r $(DESTDIR)$(REPODIR)/$(REPO) -zfv $(REPO)
-
-.PHONY: repo
-repo: $(CHROOT)
-	sudo arch-nspawn \
-          -C $(PACCONF) -M $(MAKEPKG_CONF) \
-          $(CHROOT)/root pacman -Syyu --noconfirm
-	mkdir -p $(DESTDIR)$(REPODIR)/$(REPO)
-
-.PHONY:	refresh
-refresh: $(REPO_PACCONF)
-	sudo pacman -Fy --config=$(REPO_PACCONF)
-	sudo pacman -Sy --config=$(REPO_PACCONF)
+	aws s3 sync $(DESTDIR)/$(REPO) s3://yak-packages/$(REPO)
+else
+	cp .guzuta.yml $(BUILDDIR)
+	cd $(BUILDDIR) && \
+	  guzuta omakase build $(notdir $(@D))
+endif
 
 .PHONY: build
-build: repo $(TARGETS) refresh
+build: $(TARGETS)
+
+.PHONY: update-pkg
+update-pkg:
+ifndef PKG
+	$(error PKG required)
+endif
+	cower -df $(PKG)
 
 .PHONY: new-pkg
 new-pkg:
@@ -86,15 +74,6 @@ endif
 
 .PHONY: clean
 clean: ## Remove build artifacts
-ifneq ("$(wildcard $(QUEUE))","")
-	rm $(QUEUE)
-endif
 ifneq ("$(wildcard $(BUILDDIR))","")
 	rm -rf $(BUILDDIR)
-endif
-ifneq ("$(wildcard $(BASEDIR)/pkgs/$(REPO))","")
-	rm -rf pkgs/$(REPO)
-endif
-ifneq ("$(wildcard $(TMPDIR)/pacman.conf)","")
-	rm -rf $(TMPDIR)/pacman.conf
 endif

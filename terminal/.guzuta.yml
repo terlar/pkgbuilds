@@ -1,0 +1,12 @@
+name: terminal
+package_key: 89AF679B037E1D2A
+repo_key: 89AF679B037E1D2A
+srcdest: sources
+logdest: logs
+pkgbuild: PKGBUILDs
+builds:
+  x86_64:
+    chroot: /var/cache/pkgs/chroot-x86_64
+s3:
+  bucket: yak-packages
+  region: eu-central-1

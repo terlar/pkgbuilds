@@ -1,4 +1,7 @@
+.build/
+
 tmp/
 pkgs/
+
 *.tar.gz
 *.tar.xz

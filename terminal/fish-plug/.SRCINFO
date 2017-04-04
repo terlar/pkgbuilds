@@ -7,7 +7,7 @@ pkgbase = fish-plug
 	license = MIT
 	depends = fish
 	source = https://github.com/terlar/fish-plug/archive/v0.1.1.tar.gz
-	sha256sums = edbede90c15c89a5e0d598f389bf3451fc8f56a3d5a0b0862ed3d3c3f5aac0a3
+	md5sums = 1f05c3e704cb1da914b8fc6d9723292c
 
 pkgname = fish-plug
 
