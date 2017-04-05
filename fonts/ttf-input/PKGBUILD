@@ -2,8 +2,8 @@
 # Old Maintainer: onestone at gmail dot com
 
 pkgname=ttf-input
-pkgver=20170305
-pkgrel=2
+pkgver=20170404
+pkgrel=1
 pkgdesc='Fonts for Code, from Font Bureau'
 arch=('any')
 url='http://input.fontbureau.com/'
