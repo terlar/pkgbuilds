@@ -1,0 +1,35 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+_name=jdee-server
+pkgname=jdee-server-git
+pkgver=r13.0ab27d8
+pkgrel=1
+
+pkgdesc="JDEE Java backend"
+arch=('any')
+url="https://github.com/jdee-emacs/jdee-server"
+license=('GPL2')
+
+depends=('java-runtime=8')
+makedepends=('git' 'maven' 'jdk8-openjdk')
+
+source=("git+git://github.com/jdee-emacs/${_name}")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/${_name}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "$srcdir/${_name}"
+
+  mvn package install ${MVN_OPTS}
+}
+
+package() {
+  cd "$srcdir/${_name}"
+
+  install -m 644 -D target/jdee-1.1-SNAPSHOT.jar ${pkgdir}/usr/share/java/jdee/${_name}-${pkgver}.jar
+}
+
+# vim:set ts=2 sw=2 et:

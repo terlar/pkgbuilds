@@ -1,0 +1,16 @@
+pkgbase = jdee-server-git
+	pkgdesc = JDEE Java backend
+	pkgver = r13.0ab27d8
+	pkgrel = 1
+	url = https://github.com/jdee-emacs/jdee-server
+	arch = any
+	license = GPL2
+	makedepends = git
+	makedepends = maven
+	makedepends = jdk8-openjdk
+	depends = java-runtime=8
+	source = git+git://github.com/jdee-emacs/jdee-server
+	md5sums = SKIP
+
+pkgname = jdee-server-git
+
