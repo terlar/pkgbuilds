@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Black Screen
+GenericName=Terminal
+Comment=A terminal emulator for the 21st century
+Icon=black-screen
+Exec=black-screen
+Categories=GTK;System;TerminalEmulator;
+StartupNotify=true

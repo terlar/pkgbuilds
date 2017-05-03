@@ -1,0 +1,21 @@
+pkgbase = black-screen
+	pkgdesc = A terminal emulator for the 21st century
+	pkgver = 0.2.142
+	pkgrel = 1
+	url = https://github.com/shockone/black-screen
+	arch = i686
+	arch = x86_64
+	license = MIT
+	makedepends = git
+	makedepends = apm
+	makedepends = npm
+	depends = electron
+	source = black-screen-0.2.142.tar.gz::https://github.com/shockone/black-screen/archive/v0.2.142.tar.gz
+	source = black-screen.desktop
+	source = black-screen.js
+	sha256sums = 62cb6b985593092faba786be64d652d98c98f77af97d9716a130933a06e968d8
+	sha256sums = d23e2d0254139efb0dfdd14814cee758bf7345834c5cc92dfd740c0fae0b586e
+	sha256sums = d13c04e3a0c9855fd00faaf4a7ec1cef39a276744ff49a3c9b6cbbf0f83513fb
+
+pkgname = black-screen
+
