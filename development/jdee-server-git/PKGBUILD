@@ -1,8 +1,9 @@
 # Maintainer: Terje Larsen <terlar@gmail.com>
 _name=jdee-server
+_version=1.1
 pkgname=jdee-server-git
-pkgver=r13.0ab27d8
-pkgrel=1
+pkgver=r23.446b262
+pkgrel=2
 
 pkgdesc="JDEE Java backend"
 arch=('any')
@@ -23,13 +24,13 @@ pkgver() {
 build() {
   cd "$srcdir/${_name}"
 
-  mvn package install ${MVN_OPTS}
+  mvn -DskipTests=true assembly:assembly
 }
 
 package() {
   cd "$srcdir/${_name}"
 
-  install -m 644 -D target/jdee-1.1-SNAPSHOT.jar ${pkgdir}/usr/share/java/jdee/${_name}-${pkgver}.jar
+  install -m 644 -D target/jdee-bundle-${_version}-SNAPSHOT.jar-jar-with-dependencies.jar ${pkgdir}/usr/share/java/jdee/${_name}-${_version}.jar
 }
 
 # vim:set ts=2 sw=2 et:

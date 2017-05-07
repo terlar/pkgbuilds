@@ -1,7 +1,7 @@
 pkgbase = jdee-server-git
 	pkgdesc = JDEE Java backend
-	pkgver = r13.0ab27d8
-	pkgrel = 1
+	pkgver = r23.446b262
+	pkgrel = 2
 	url = https://github.com/jdee-emacs/jdee-server
 	arch = any
 	license = GPL2
