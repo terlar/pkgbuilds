@@ -1,0 +1,19 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+pkgname=tmux-xpanes
+pkgver=2.0.1
+pkgrel=1
+pkgdesc="Ultimate terminal divider powered by tmux"
+arch=('any')
+url="https://github.com/greymd/tmux-xpanes"
+license=('MIT')
+depends=(bash tmux)
+source=("https://github.com/greymd/${pkgname}/archive/v${pkgver}.tar.gz")
+md5sums=('ca89d988c862ab7ec9691e4d44bcc800')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  install -D -m755 bin/xpanes $pkgdir/usr/bin/xpanes
+}
+
+# vim:set ts=2 sw=2 et:
