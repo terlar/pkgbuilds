@@ -1,0 +1,28 @@
+# Maintainer: Terje Larsen <terje@blackbird>
+pkgname=harcurl
+pkgver=0.9.7
+pkgrel=1
+pkgdesc="HTTP Archive (HAR) command-line tool"
+arch=('any')
+url="https://github.com/andydude/harcurl"
+license=('GPL3')
+depends=('curl' 'jansson' 'glibc' 'zlib')
+makedepends=('automake' 'autoconf')
+source=("https://github.com/andydude/${pkgname}/archive/v${pkgver}.tar.gz")
+sha256sums=('c6024cad2842cfb76a72d0cee90f2742f57ff7417e3d5061d33094de0355008f')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  ./autogen.sh
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:

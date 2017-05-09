@@ -1,0 +1,18 @@
+pkgbase = harcurl
+	pkgdesc = HTTP Archive (HAR) command-line tool
+	pkgver = 0.9.7
+	pkgrel = 1
+	url = https://github.com/andydude/harcurl
+	arch = any
+	license = GPL3
+	makedepends = automake
+	makedepends = autoconf
+	depends = curl
+	depends = jansson
+	depends = glibc
+	depends = zlib
+	source = https://github.com/andydude/harcurl/archive/v0.9.7.tar.gz
+	sha256sums = c6024cad2842cfb76a72d0cee90f2742f57ff7417e3d5061d33094de0355008f
+
+pkgname = harcurl
+
