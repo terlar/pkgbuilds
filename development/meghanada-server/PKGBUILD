@@ -1,0 +1,36 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+_name=meghanada
+pkgname=meghanada-server
+pkgver=0.7.5
+pkgrel=1
+
+pkgdesc="A Java IDE Server for your editor. Java IDE-like features to your favourite text editor."
+arch=('any')
+url="https://github.com/mopemope/${pkgname}"
+license=('GPL3')
+
+depends=('java-runtime=8' 'jdk8-openjdk')
+makedepends=('git' 'gradle')
+
+source=("git+git://github.com/mopemope/${pkgname}#tag=v${pkgver}")
+sha256sums=('SKIP')
+
+build() {
+  cd "$srcdir/${pkgname}"
+
+  ./gradlew clean shadowJar
+}
+
+package() {
+  cd "$srcdir/${pkgname}"
+
+  install -m 644 -D build/libs/${_name}-${pkgver}.jar ${pkgdir}/usr/share/java/${_name}-${_version}.jar
+}
+
+post_install() {
+  cd "$srcdir/${pkgname}"
+
+  ln -s ${pkgdir}/usr/share/java/${_name}-${_version}.jar ${pkgdir}/usr/share/java/${_name}.jar
+}
+
+# vim:set ts=2 sw=2 et:
