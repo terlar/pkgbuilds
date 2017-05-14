@@ -1,14 +1,14 @@
 pkgbase = guzuta
 	pkgdesc = Custom repository manager for ArchLinux pacman
-	pkgver = 0.2.3
+	pkgver = 0.2.6
 	pkgrel = 1
 	url = https://github.com/eagletmt/guzuta
 	arch = any
 	license = MIT
 	makedepends = rust
 	makedepends = cargo
-	source = https://github.com/eagletmt/guzuta/archive/v0.2.3.tar.gz
-	sha256sums = 7b80e3d46b4abd59e5c2182e27850406397ed712cc5c86158673ffddf71f9640
+	source = https://github.com/eagletmt/guzuta/archive/v0.2.6.tar.gz
+	sha256sums = 3839d9d64edb65143c809143dd43defd332f6d184070b7f649e2758bbc6a50a1
 
 pkgname = guzuta
 
