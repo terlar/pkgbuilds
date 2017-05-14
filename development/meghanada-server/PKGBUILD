@@ -2,18 +2,20 @@
 _name=meghanada
 pkgname=meghanada-server
 pkgver=0.7.5
-pkgrel=1
+pkgrel=2
 
 pkgdesc="A Java IDE Server for your editor. Java IDE-like features to your favourite text editor."
 arch=('any')
 url="https://github.com/mopemope/${pkgname}"
 license=('GPL3')
 
-depends=('java-runtime=8' 'jdk8-openjdk')
+depends=('java-runtime=8' 'java-environment=8')
 makedepends=('git' 'gradle')
 
-source=("git+git://github.com/mopemope/${pkgname}#tag=v${pkgver}")
-sha256sums=('SKIP')
+source=("git+git://github.com/mopemope/${pkgname}#tag=v${pkgver}"
+        "meghanada.run")
+sha256sums=('SKIP'
+            '7a8825c111bdd68227447ff01a59642a9d7662463cbc680115df018ebf8e5afc')
 
 build() {
   cd "$srcdir/${pkgname}"
@@ -22,15 +24,17 @@ build() {
 }
 
 package() {
+  install -m 755 -D "${_name}.run" ${pkgdir}/usr/bin/${_name}
+
   cd "$srcdir/${pkgname}"
 
-  install -m 644 -D build/libs/${_name}-${pkgver}.jar ${pkgdir}/usr/share/java/${_name}-${_version}.jar
+  install -m 644 -D build/libs/${_name}-${pkgver}.jar ${pkgdir}/usr/share/java/${_name}-${pkver}.jar
 }
 
 post_install() {
   cd "$srcdir/${pkgname}"
 
-  ln -s ${pkgdir}/usr/share/java/${_name}-${_version}.jar ${pkgdir}/usr/share/java/${_name}.jar
+  ln -s ${pkgdir}/usr/share/java/${_name}-${pkver}.jar ${pkgdir}/usr/share/java/${_name}.jar
 }
 
 # vim:set ts=2 sw=2 et:
