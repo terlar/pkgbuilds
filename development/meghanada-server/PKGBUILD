@@ -2,7 +2,7 @@
 _name=meghanada
 pkgname=meghanada-server
 pkgver=0.7.5
-pkgrel=2
+pkgrel=3
 
 pkgdesc="A Java IDE Server for your editor. Java IDE-like features to your favourite text editor."
 arch=('any')
@@ -28,13 +28,9 @@ package() {
 
   cd "$srcdir/${pkgname}"
 
-  install -m 644 -D build/libs/${_name}-${pkgver}.jar ${pkgdir}/usr/share/java/${_name}-${pkver}.jar
-}
+  install -m 644 -D build/libs/${_name}-${pkgver}.jar ${pkgdir}/usr/share/java/${_name}-${pkgver}.jar
 
-post_install() {
-  cd "$srcdir/${pkgname}"
-
-  ln -s ${pkgdir}/usr/share/java/${_name}-${pkver}.jar ${pkgdir}/usr/share/java/${_name}.jar
+  ln -sf ${_name}-${pkgver}.jar ${pkgdir}/usr/share/java/${_name}.jar
 }
 
 # vim:set ts=2 sw=2 et:

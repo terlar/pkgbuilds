@@ -1,7 +1,7 @@
 pkgbase = meghanada-server
 	pkgdesc = A Java IDE Server for your editor. Java IDE-like features to your favourite text editor.
 	pkgver = 0.7.5
-	pkgrel = 2
+	pkgrel = 3
 	url = https://github.com/mopemope/meghanada-server
 	arch = any
 	license = GPL3
