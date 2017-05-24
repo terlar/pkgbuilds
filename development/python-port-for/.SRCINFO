@@ -1,0 +1,16 @@
+pkgbase = python-port-for
+	pkgdesc = Utility that helps with local TCP ports managment. It can find an unused TCP localhost port and remember the association.
+	pkgver = 0.3.1
+	pkgrel = 2
+	url = https://github.com/kmike/port-for
+	arch = any
+	license = custom
+	makedepends = git
+	makedepends = python-setuptools
+	depends = python
+	conflicts = python2-port-for
+	source = python-port-for::git+https://github.com/kmike/port-for.git#tag=0.3.1
+	sha256sums = SKIP
+
+pkgname = python-port-for
+
