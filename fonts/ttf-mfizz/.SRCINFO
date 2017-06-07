@@ -1,0 +1,15 @@
+pkgbase = ttf-mfizz
+	pkgdesc = Vector Icons for Technology and Software Geeks
+	pkgver = 2.4.1
+	pkgrel = 1
+	url = https://icomoon.io/
+	install = ttf-mfizz.install
+	arch = any
+	license = MIT
+	depends = fontconfig
+	depends = xorg-font-utils
+	source = https://github.com/fizzed/font-mfizz/archive/v2.4.1.tar.gz
+	sha256sums = 6ec29d8e3dce7a3719328ff2ec49f1144f98ae50510e3c98ff28346b8d1396c4
+
+pkgname = ttf-mfizz
+

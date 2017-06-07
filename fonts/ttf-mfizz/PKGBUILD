@@ -1,0 +1,22 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+
+_name=font-mfizz
+pkgname=ttf-mfizz
+pkgver=2.4.1
+pkgrel=1
+pkgdesc="Vector Icons for Technology and Software Geeks"
+arch=('any')
+license=('MIT')
+url="https://icomoon.io/"
+depends=('fontconfig' 'xorg-font-utils')
+source=("https://github.com/fizzed/${_name}/archive/v${pkgver}.tar.gz")
+sha256sums=('6ec29d8e3dce7a3719328ff2ec49f1144f98ae50510e3c98ff28346b8d1396c4')
+install=$pkgname.install
+
+package() {
+  cd "${srcdir}/${_name}-${pkgver}"
+  install -Dm644 src/LICENSE.txt $pkgdir/usr/share/licenses/$pkgname/LICENSE
+
+  install -d $pkgdir/usr/share/fonts/TTF/
+  install -m644 dist/${_name}.ttf $pkgdir/usr/share/fonts/TTF/
+}
