@@ -1,7 +1,7 @@
 pkgbase = ttf-mfizz
 	pkgdesc = Vector Icons for Technology and Software Geeks
 	pkgver = 2.4.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://icomoon.io/
 	install = ttf-mfizz.install
 	arch = any

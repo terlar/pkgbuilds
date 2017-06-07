@@ -2,7 +2,7 @@
 
 pkgname=ttf-icomoon
 pkgver=0
-pkgrel=1
+pkgrel=2
 pkgdesc="IcoMoon's icons are carefully designed on a 16x16 grid."
 arch=('any')
 license=('GPL' 'CC BY 4.0')

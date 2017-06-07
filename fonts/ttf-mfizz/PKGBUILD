@@ -3,7 +3,7 @@
 _name=font-mfizz
 pkgname=ttf-mfizz
 pkgver=2.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Vector Icons for Technology and Software Geeks"
 arch=('any')
 license=('MIT')
