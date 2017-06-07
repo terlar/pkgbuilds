@@ -1,0 +1,16 @@
+pkgbase = ttf-icomoon
+	pkgdesc = IcoMoon's icons are carefully designed on a 16x16 grid.
+	pkgver = 0
+	pkgrel = 1
+	url = https://icomoon.io/
+	install = ttf-icomoon.install
+	arch = any
+	license = GPL
+	license = CC BY 4.0
+	depends = fontconfig
+	depends = xorg-font-utils
+	source = https://github.com/Keyamoon/IcoMoon-Free/archive/master.zip
+	sha256sums = f303923bc9369910b643aab5342ce0ecdb91e35e4d5a0a2a4c68387f559f37e9
+
+pkgname = ttf-icomoon
+

@@ -1,0 +1,21 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+
+pkgname=ttf-icomoon
+pkgver=0
+pkgrel=1
+pkgdesc="IcoMoon's icons are carefully designed on a 16x16 grid."
+arch=('any')
+license=('GPL' 'CC BY 4.0')
+url="https://icomoon.io/"
+depends=('fontconfig' 'xorg-font-utils')
+source=("https://github.com/Keyamoon/IcoMoon-Free/archive/master.zip")
+sha256sums=('f303923bc9369910b643aab5342ce0ecdb91e35e4d5a0a2a4c68387f559f37e9')
+install=$pkgname.install
+
+package() {
+  cd "${srcdir}/IcoMoon-Free-master"
+  install -Dm644 License.txt $pkgdir/usr/share/licenses/$pkgname/LICENSE
+
+  install -d $pkgdir/usr/share/fonts/TTF/
+  install -m644 Font/IcoMoon-Free.ttf $pkgdir/usr/share/fonts/TTF/
+}
