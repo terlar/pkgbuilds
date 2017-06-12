@@ -27,6 +27,7 @@ SOURCESDIR   := $(BUILDDIR)/sources
 LOGSDIR      := $(BUILDDIR)/logs
 PKGBUILDSDIR := $(BUILDDIR)/PKGBUILDs
 TARGETS      := $(addprefix $(PKGBUILDSDIR)/,$(PKGBUILDS))
+GIT_TARGETS  := $(filter %-git/PKGBUILD,$(TARGETS))
 
 $(PKGBUILDSDIR)/%/PKGBUILD: %/PKGBUILD
 	@mkdir -p $(PKGBUILDSDIR)
@@ -51,7 +52,7 @@ else
 endif
 
 .PHONY: build
-build: $(TARGETS)
+build: clean-git $(TARGETS)
 
 .PHONY: update-pkg
 update-pkg:
@@ -70,6 +71,12 @@ ifneq ("$(LOCAL)","1")
 else
 	mkdir $(PKG)
 	touch $(PKG)/PKGBUILD
+endif
+
+.PHONY: clean-git
+clean-git: ## Clean git based packages
+ifneq ("$(GIT_TARGETS)","")
+	@-rm $(GIT_TARGETS) ||:
 endif
 
 .PHONY: clean
