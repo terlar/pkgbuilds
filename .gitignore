@@ -3,5 +3,8 @@
 tmp/
 pkgs/
 
+pkg/
+src/
+
 *.tar.gz
 *.tar.xz
