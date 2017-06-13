@@ -1,0 +1,22 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+pkgname=fd
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="A simple, fast and user-friendly alternative to find"
+arch=('any')
+url="https://github.com/sharkdp/fd"
+license=('MIT')
+makedepends=('rust' 'cargo')
+checkdepends=()
+source=(https://github.com/sharkdp/fd/archive/v$pkgver.tar.gz)
+sha256sums=('05993180251a5c2c29c95ce0765bacfa9906eb6c4c6570be4e18faa5b31c1817')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  cargo build --release
+
+  install -Dm755 "target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
+}
+
+# vim:set ts=2 sw=2 et:
