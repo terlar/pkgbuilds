@@ -1,0 +1,30 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+pkgname=gohai-git
+pkgver=r129.92686dd
+pkgrel=1
+pkgdesc="System information collector"
+arch=('any')
+url="https://github.com/DataDog/gohai"
+license=('MIT')
+makedepends=('git' 'go')
+_gourl=github.com/DataDog/gohai
+
+pkgver() {
+  GOPATH="${srcdir}" go get -d "${_gourl}"
+  cd "${srcdir}/src/${_gourl}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${srcdir}"
+  GOPATH="${srcdir}" go get -u -f -v -x "${_gourl}"
+}
+
+package() {
+  cd "${srcdir}"
+  install -Dm 755 bin/gohai "${pkgdir}/usr/bin/gohai"
+  cd "${srcdir}/src/${_gourl}"
+  install -Dm 644 README.md "${pkgdir}/usr/share/doc/${pkgname%-*}/README.md"
+  install -Dm 644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname%-*}/LICENSE"
+  install -Dm 644 THIRD_PARTY_LICENSES.md	"${pkgdir}/usr/share/licenses/${pkgname%-*}/THIRD_PARTY_LICENSES.md"
+}

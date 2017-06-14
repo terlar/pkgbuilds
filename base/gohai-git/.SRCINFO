@@ -1,0 +1,12 @@
+pkgbase = gohai-git
+	pkgdesc = System information collector
+	pkgver = r129.92686dd
+	pkgrel = 1
+	url = https://github.com/DataDog/gohai
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = go
+
+pkgname = gohai-git
+
