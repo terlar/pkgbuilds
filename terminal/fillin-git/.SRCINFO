@@ -1,0 +1,12 @@
+pkgbase = fillin-git
+	pkgdesc = fill-in your command and execute
+	pkgver = r125.d3d58b8
+	pkgrel = 1
+	url = https://github.com/itchyny/fillin
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = go
+
+pkgname = fillin-git
+
