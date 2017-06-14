@@ -1,0 +1,29 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+pkgname=k6-git
+pkgver=r1581.ae6b19d
+pkgrel=1
+pkgdesc="A modern load testing tool, using Go"
+arch=('any')
+url="https://github.com/loadimpact/k6"
+license=('AGPL3')
+makedepends=('git' 'go')
+_gourl=github.com/loadimpact/k6
+
+pkgver() {
+  GOPATH="${srcdir}" go get -d "${_gourl}"
+  cd "${srcdir}/src/${_gourl}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${srcdir}"
+  GOPATH="${srcdir}" go get -u -f -v -x "${_gourl}"
+}
+
+package() {
+  cd "${srcdir}"
+  install -Dm 755 bin/k6 "${pkgdir}/usr/bin/k6"
+  cd "${srcdir}/src/${_gourl}"
+  install -Dm 644 README.md "${pkgdir}/usr/share/doc/${pkgname%-*}/README.md"
+  install -Dm 644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname%-*}/LICENSE.md"
+}

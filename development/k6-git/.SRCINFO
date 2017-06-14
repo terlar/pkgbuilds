@@ -1,0 +1,12 @@
+pkgbase = k6-git
+	pkgdesc = A modern load testing tool, using Go
+	pkgver = r1581.ae6b19d
+	pkgrel = 1
+	url = https://github.com/loadimpact/k6
+	arch = any
+	license = AGPL3
+	makedepends = git
+	makedepends = go
+
+pkgname = k6-git
+
