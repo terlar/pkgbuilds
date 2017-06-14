@@ -1,0 +1,12 @@
+pkgbase = gotpl-git
+	pkgdesc = CLI tool for Golang templates
+	pkgver = r2.a4179fb
+	pkgrel = 1
+	url = https://github.com/tsg/gotpl
+	arch = any
+	license = APACHE
+	makedepends = git
+	makedepends = go
+
+pkgname = gotpl-git
+
