@@ -1,0 +1,12 @@
+pkgbase = warp-git
+	pkgdesc = Secure and simple terminal sharing
+	pkgver = r160.728259c
+	pkgrel = 1
+	url = https://github.com/spolu/warp
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = go
+
+pkgname = warp-git
+

@@ -1,0 +1,31 @@
+# Maintainer: Terje Larsen <terlar@gmail.com>
+pkgname=warp-git
+pkgver=r160.728259c
+pkgrel=1
+pkgdesc="Secure and simple terminal sharing"
+arch=('any')
+url="https://github.com/spolu/warp"
+license=('MIT')
+makedepends=('git' 'go')
+_gourl=github.com/spolu/warp
+_gourl2=github.com/spolu/warp/client/cmd/warp
+
+pkgver() {
+  GOPATH="${srcdir}" go get -d "${_gourl}"
+  cd "${srcdir}/src/${_gourl}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${srcdir}"
+  GOPATH="${srcdir}" go get -u -f -v -x "${_gourl}"
+  GOPATH="${srcdir}" go get -u -f -v -x "${_gourl2}"
+}
+
+package() {
+  cd "${srcdir}"
+  install -Dm 755 bin/warp "${pkgdir}/usr/bin/warp"
+  cd "${srcdir}/src/${_gourl}"
+  install -Dm 644 README.md "${pkgdir}/usr/share/doc/${pkgname%-*}/README.md"
+  install -Dm 644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname%-*}/LICENSE"
+}
