@@ -1,0 +1,12 @@
+pkgbase = godef-git
+	pkgdesc = Print where symbols are defined in Go source code
+	pkgver = r334.5211fe6
+	pkgrel = 1
+	url = https://github.com/rogpeppe/godef
+	arch = any
+	license = BSD
+	makedepends = git
+	makedepends = go
+
+pkgname = godef-git
+
