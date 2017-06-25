@@ -1,0 +1,12 @@
+pkgbase = gore-git
+	pkgdesc = Yet another Go REPL that works nicely. Featured with line editing, code completion, and more.
+	pkgver = r132.3c59a52
+	pkgrel = 1
+	url = https://github.com/motemen/gore
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = go
+
+pkgname = gore-git
+
