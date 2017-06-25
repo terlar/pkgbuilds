@@ -1,0 +1,12 @@
+pkgbase = gocode-git
+	pkgdesc = An autocompletion daemon for the Go programming language
+	pkgver = r751.843b7a6
+	pkgrel = 1
+	url = https://github.com/nsf/gocode
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = go
+
+pkgname = gocode-git
+
