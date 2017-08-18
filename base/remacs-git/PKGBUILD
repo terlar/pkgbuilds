@@ -31,6 +31,7 @@
 # =============================================================
 #
 #######################################################################
+LUCID=YES        # Use Lucid
 GTK2=            # Leave empty to compile with gtk+ 3 support.
 LTO=             # Enable link-time optimization. Experimental.
 CAIRO=           # Highly experimental.
@@ -46,7 +47,7 @@ DOCS_INFO="NO"    # Generate and install GNU info documentation.
 #######################################################################
 
 pkgname=remacs-git
-pkgver=26.0.50.128380
+pkgver=26.0.50.130551
 pkgrel=1
 pkgdesc="Development branch of REmacs, a fork of GNU Emacs with components rewritten in Rust"
 arch=('i686' 'x86_64')
@@ -58,8 +59,10 @@ makedepends=('git' 'cargo')
 #######################################################################
 if [[ $GTK2 = "YES" ]]; then
   depends+=('gtk2');
+elif [[ $LUCID = "YES" ]]; then
+  depends+=();
 else
-  depends+=('gtk3'); 
+  depends+=('gtk3');
 fi
 if [[ $CAIRO = "YES" ]]; then depends+=('cairo'); fi
 if [[ $XWIDGETS = "" ]]; then depends+=('giflib'); fi
@@ -121,6 +124,8 @@ build() {
 #######################################################################
   if [[ $GTK2 = "YES" ]]; then
     _conf+=('--with-x-toolkit=gtk2' '--with-gconf' '--without-gsettings');
+  elif [[ $LUCID = "YES" ]]; then
+    _conf+=('--with-x-toolkit=lucid' '--without-gconf' '--without-gsettings');
   else
     _conf+=('--with-x-toolkit=gtk3' '--without-gconf' '--with-gsettings');
   fi
@@ -168,9 +173,13 @@ package() {
   if [[ $DOCS_HTML = "YES" ]]; then make DESTDIR="$pkgdir/" install-html; fi
   if [[ $DOCS_PDF = "YES" ]]; then make DESTDIR="$pkgdir/" install-pdf; fi
 
-  # remove conflict with ctags package
+  # remove conflict with ctags/emacs package
   mv "$pkgdir"/usr/bin/{ctags,ctags.remacs}
-  mv "$pkgdir"/usr/share/man/man2/{ctags.1.gz,ctags.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{ctags.1.gz,ctags.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{ebrowse.1.gz,ebrowse.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{emacs.1.gz,emacs.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{emacsclient.1.gz,emacsclient.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{etags.1.gz,etags.remacs.1.gz}
   mv "$pkgdir"/usr/bin/{etags,etags.remacs}
   mv "$pkgdir"/usr/bin/{ebrowse,ebrowse.remacs}
 
