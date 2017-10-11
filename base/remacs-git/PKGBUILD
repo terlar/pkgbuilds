@@ -47,7 +47,7 @@ DOCS_INFO="NO"    # Generate and install GNU info documentation.
 #######################################################################
 
 pkgname=remacs-git
-pkgver=26.0.50.130551
+pkgver=27.0.50.131359
 pkgrel=1
 pkgdesc="Development branch of REmacs, a fork of GNU Emacs with components rewritten in Rust"
 arch=('i686' 'x86_64')
@@ -114,7 +114,7 @@ build() {
     --localstatedir=/var
     --mandir=/usr/share/man
     --with-gameuser=:games
-    --with-sound=alsa
+    --with-sound=alsa 
     --with-xft
     --with-modules
     )
@@ -146,10 +146,10 @@ build() {
   ./configure "${_conf[@]}" "${_conf_vars[@]}"
 
   # Using "make" instead of "make bootstrap" enables incremental
-  # compiling. Less time recompiling. Yay! But if you may
-  # need to use bootstrap sometime, just add it to the command
+  # compiling. Less time recompiling. Yay! But if you may 
+  # need to use bootstrap sometime, just add it to the command 
   # line.
-  # Please note that incremental compilation implies that you
+  # Please note that incremental compilation implies that you 
   # are reusing your src directory!
   make
 
@@ -173,13 +173,13 @@ package() {
   if [[ $DOCS_HTML = "YES" ]]; then make DESTDIR="$pkgdir/" install-html; fi
   if [[ $DOCS_PDF = "YES" ]]; then make DESTDIR="$pkgdir/" install-pdf; fi
 
-  # remove conflict with ctags/emacs package
+  # remove conflict with ctags package
   mv "$pkgdir"/usr/bin/{ctags,ctags.remacs}
   mv "$pkgdir"/usr/share/man/man1/{ctags.1.gz,ctags.remacs.1.gz}
-  mv "$pkgdir"/usr/share/man/man1/{ebrowse.1.gz,ebrowse.remacs.1.gz}
-  mv "$pkgdir"/usr/share/man/man1/{emacs.1.gz,emacs.remacs.1.gz}
-  mv "$pkgdir"/usr/share/man/man1/{emacsclient.1.gz,emacsclient.remacs.1.gz}
   mv "$pkgdir"/usr/share/man/man1/{etags.1.gz,etags.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{ebrowse.1.gz,ebrowse.remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{emacs.1.gz,remacs.1.gz}
+  mv "$pkgdir"/usr/share/man/man1/{emacsclient.1.gz,remacsclient.1.gz}
   mv "$pkgdir"/usr/bin/{etags,etags.remacs}
   mv "$pkgdir"/usr/bin/{ebrowse,ebrowse.remacs}
 
@@ -193,7 +193,7 @@ package() {
   chown -R root:games "$pkgdir"/var/games
 
   # The logic used to install systemd's user service is partially broken
-  # under Arch Linux model, because it adds $DESTDIR as prefix to the
+  # under Arch Linux model, because it adds $DESTDIR as prefix to the 
   # final Exec targets. The fix is to hack it with an axe.
   install -Dm644 etc/remacs.service "$pkgdir"/usr/lib/systemd/user/remacs.service
   sed -i -e 's#\(ExecStart\=\)#\1\/usr\/bin\/#' \
