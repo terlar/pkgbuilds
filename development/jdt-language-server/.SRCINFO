@@ -1,0 +1,14 @@
+pkgbase = jdt-language-server
+	pkgdesc = Java language server
+	pkgver = 0.7.0.201710251346
+	pkgrel = 1
+	url = https://github.com/eclipse/
+	arch = any
+	license = EPL
+	makedepends = git
+	depends = java-environment
+	source = http://download.eclipse.org/jdtls/snapshots/jdt-language-server-0.7.0-201710251346.tar.gz
+	md5sums = b91730f81af59345b0daa96b888dfb7b
+
+pkgname = jdt-language-server
+

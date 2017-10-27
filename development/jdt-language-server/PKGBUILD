@@ -1,0 +1,26 @@
+# Maintainer: Terje Larsen
+
+pkgname=jdt-language-server
+pkgver=0.7.0.201710251346
+pkgrel=1
+pkgdesc="Java language server"
+arch=('any')
+url="https://github.com/eclipse/${_name}"
+license=('EPL')
+depends=('java-environment')
+makedepends=('git')
+source=("http://download.eclipse.org/jdtls/snapshots/${pkgname}-${pkgver%.*}-${pkgver##*.}.tar.gz")
+md5sums=('b91730f81af59345b0daa96b888dfb7b')
+
+package() {
+  cd "${srcdir}/${_name}"
+
+  install -d "${pkgdir}/opt/${pkgname}"
+  install -m 777 -d "${pkgdir}/opt/${pkgname}/config_linux"
+  install -d "${pkgdir}/opt/${pkgname}/features"
+  install -d "${pkgdir}/opt/${pkgname}/plugins"
+
+  install -m 644 -t "${pkgdir}/opt/${pkgname}/config_linux" config_linux/*
+  install -m 644 -t "${pkgdir}/opt/${pkgname}/features" features/*
+  install -m 644 -t "${pkgdir}/opt/${pkgname}/plugins" plugins/*.jar
+}
