@@ -47,14 +47,14 @@ DOCS_INFO="NO"    # Generate and install GNU info documentation.
 #######################################################################
 
 pkgname=remacs-git
-pkgver=27.0.50.131359
+pkgver=27.0.50.131471
 pkgrel=1
 pkgdesc="Development branch of REmacs, a fork of GNU Emacs with components rewritten in Rust"
 arch=('i686' 'x86_64')
 url="https://github.com/Wilfred/remacs.git"
 license=('GPL')
 depends=('gpm' 'm17n-lib' 'alsa-lib' 'imagemagick')
-makedepends=('git' 'cargo')
+makedepends=('git' 'rustup')
 #######################################################################
 #######################################################################
 if [[ $GTK2 = "YES" ]]; then
@@ -97,6 +97,9 @@ pkgver() {
 # Doing so, breaks incremental compilation.
 prepare() {
   cd "$srcdir/$pkgname"
+
+  rustup install nightly
+  rustup override set nightly
 
   [[ -x configure ]] || ./autogen.sh
 }
