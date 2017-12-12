@@ -31,7 +31,7 @@
 # =============================================================
 #
 #######################################################################
-LUCID=YES        # Use Lucid
+LUCID=           # Use Lucid
 GTK2=            # Leave empty to compile with gtk+ 3 support.
 LTO=             # Enable link-time optimization. Experimental.
 CAIRO=           # Highly experimental.
@@ -47,7 +47,7 @@ DOCS_INFO="NO"    # Generate and install GNU info documentation.
 #######################################################################
 
 pkgname=remacs-git
-pkgver=27.0.50.131471
+pkgver=26.0.60.131678
 pkgrel=1
 pkgdesc="Development branch of REmacs, a fork of GNU Emacs with components rewritten in Rust"
 arch=('i686' 'x86_64')
