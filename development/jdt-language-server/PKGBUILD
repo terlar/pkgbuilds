@@ -1,7 +1,7 @@
 # Maintainer: Terje Larsen
 
 pkgname=jdt-language-server
-pkgver=0.11.0.201801040110
+pkgver=0.12.0.201801172015
 pkgrel=1
 pkgdesc="Java language server"
 arch=('any')
@@ -10,7 +10,7 @@ license=('EPL')
 depends=('java-environment')
 makedepends=('git')
 source=("http://download.eclipse.org/jdtls/snapshots/${pkgname}-${pkgver%.*}-${pkgver##*.}.tar.gz")
-sha256sums=('39f6a53cd5d0cfd06a7b0ff79b5c29708093dc62345903529ea96ee95c766e98')
+sha256sums=('dcf5a5c7788b3ea5dcf7b18213ea0ec2d1066799c879828f9bbc688028d6a48f')
 
 package() {
   cd "${srcdir}/${_name}"
