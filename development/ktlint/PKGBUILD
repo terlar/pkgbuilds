@@ -1,0 +1,17 @@
+# Maintainer: Terje Larsen <terje@blackbird>
+pkgname=ktlint
+pkgver=0.15.0
+pkgrel=1
+pkgdesc="An anti-bikeshedding Kotlin linter with built-in formatter"
+arch=('x86_64')
+url="https://ktlint.github.io/"
+license=('MIT')
+makedepends=('gnupg')
+source=("https://github.com/shyiko/$pkgname/releases/download/$pkgver/$pkgname")
+sha512sums=('28d89ab2bc5f4cc3f8b4b0c97ff8e9516bb89dc223fba122e48e39aedfb785284f26c6dd0504f18b1284a8addf9012c2d69b21a8f8dcc59161b361bd541bc4fa')
+
+package() {
+  install -D -m755 ktlint "$pkgdir/usr/bin/ktlint"
+}
+
+# vim:set ts=2 sw=2 et:
